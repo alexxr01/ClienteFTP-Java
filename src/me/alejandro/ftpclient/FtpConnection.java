@@ -48,8 +48,9 @@ public class FtpConnection implements Runnable, Comparator {
 				int replyCode = this.ftpConnection.getReplyCode();
 				if (!FTPReply.isPositiveCompletion(replyCode)) {
 					this.replies.add("Operation failed. Server reply code: " + replyCode);	                
-				}else            	           
+				} else {
 					this.replies.add("Connected to " + this.name);
+				}
 
 				boolean success = this.ftpConnection.login(this.user, this.pass);
 				if (!success) {

@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 
 public class FtpClient implements Runnable{
-	private final int CONNECT=1;
-	private final int SEL_FOLDER=2;
-	private final int MK_FOLDER=3;
-	private final int EXIT=100;
+	private final int CONNECT = 1;
+	private final int SEL_FOLDER = 2;
+	private final int MK_FOLDER = 3;
+	private final int EXIT = 100;
 	private FtpClientConfig ftpConfig;
 	private FtpConnection ftpConnection;
 	private boolean close = false;
