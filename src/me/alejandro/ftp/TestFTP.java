@@ -16,22 +16,31 @@ public class TestFTP {
 		String linea;
 		String[] lectura = null;
 		try {
+			// Se almacena el archivo
 			File archivo = new File(archivoConfig);
+			// Leemos el archivo, lo almacena mediante un flujo de entrada de bytes 
 			InputStream is = new FileInputStream(archivo);
+			// Leemos el texto procedente del InputStream
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			//connectionname#address#puerto#usuarioftp#claveftp
 			while(br.ready()) {
+				// Vamos almacenando en las lineas
 				linea = br.readLine();
+				// Determinamos que cada palabra estará separada por #
 				lectura = linea.split("#");
 			}
+			// Cerramos los flujos, importante, si no siempre están activos y
+			// es memoria que estamos ocupando para nada
 			is.close();
 			br.close();
+			// Excepciones
 		} catch (IOException e) {
+			// Mensaje
 			System.out.println("Hay algún error en el archivo y su lectura.");
-			e.printStackTrace();
+			e.printStackTrace(); // Mensaje detallado por parte del IDE
 		}
 
-		
+		// Creamos un objeto de la clase
 		ClienteFTP cliente1 = new ClienteFTP(lectura[0], lectura[1], lectura[2]);
 		//ClienteFTP cliente2 = new ClienteFTP("ftp.servidor2.com", "usuario2", "password2");
 
