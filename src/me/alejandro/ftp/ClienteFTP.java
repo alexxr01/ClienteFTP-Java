@@ -158,7 +158,7 @@ public class ClienteFTP implements Runnable {
 		return false;
 	}
 
-	
+	/*
     public boolean subirArchivo(String rutaLocal, String archivoRemoto) {
         try (OutputStream outputStream = ftp.storeFileStream(archivoRemoto)) {
             return ftp.storeFile(rutaLocal, outputStream);
@@ -167,4 +167,5 @@ public class ClienteFTP implements Runnable {
         }
         return false;
     } 
+    */
 }
