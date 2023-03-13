@@ -29,6 +29,8 @@ public class TestFTP {
 				// Determinamos que cada palabra estará separada por #
 				lectura = linea.split("#");
 			}
+			// Si todo lo anterior ha salido bien, mostramos un mensaje
+			System.out.println("El archivo ha sido leído correctamente.");
 			// Cerramos los flujos, importante, si no siempre están activos y
 			// es memoria que estamos ocupando para nada
 			is.close();
