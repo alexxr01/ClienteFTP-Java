@@ -28,14 +28,6 @@ public class ClienteFTP implements Runnable {
 	// Creamos un hilo, ya que la actividad nos lo pide.
 	@Override
 	public void run() {
-		System.out.println("Elige la opción que desees:\n"
-				+ "1. Conectar al servidor\n"
-				+ "2. Buscar archivos\n"
-				+ "3. Listar ficheros y directorios\n"
-				+ "4. Buscar un fichero o directorio\n"
-				+ "5. Descargar un fichero\n"
-				+ "6. Subir un fichero\n"
-				+ "7. Desconectar");
 		int opcion = sc.nextInt();
 		switch (opcion) {
 		case 1:

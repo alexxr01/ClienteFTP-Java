@@ -33,10 +33,10 @@ public class TestFTP {
 			System.out.println("Los datos de conexión obtenidos de '" + archivo.toString() + "' son los siguientes:\n"
 					+ "host=" + lectura[0] + ", usuario=" + lectura[1] + ", contrasena=" + lectura[2] + "\n");
 			// Cerramos los flujos, importante, si no siempre están activos y
-			// es memoria que estamos ocupando para nada
+			// es memoria que estamos ocupando para nada.
 			is.close();
 			br.close();
-			// Mostramos el mensaje de menú
+			// Mostramos el mensaje de menú.
 			System.out.println("Elige la opción que desees:\n"
 					+ "1. Conectar al servidor\n"
 					+ "2. Buscar archivos\n"
