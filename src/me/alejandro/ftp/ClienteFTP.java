@@ -5,8 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ClienteFTP implements Runnable {
+	// Scanner necesario para recoger la opcion seleccionada
+	Scanner sc = new Scanner(System.in);
 	// Declaramos las variables necesarias
 	private String servidor;
 	private String usuario;
@@ -25,19 +28,42 @@ public class ClienteFTP implements Runnable {
 	// Creamos un hilo, ya que la actividad nos lo pide.
 	@Override
 	public void run() {
-		// Llamamos al método conectar
-		conectar();
-		// Almacenamos los archivos procedentes del método en un
-		// Array de Strings denominado archivos
-		String[] archivos = listarArchivos();
-		// Mostramos los archivos que hay dentro del servidor
-		System.out.println("Archivos en el servidor: " + Arrays.toString(archivos));
-		// Almacenamos en un boolean si se ha encontrado el siguiente archivo o no
-		boolean encontrado = buscarArchivo("archivo.txt");
-		// Si se ha encontrado se realiza lo siguiente
-		if (encontrado) {
-			// Muestra un mensaje
-			System.out.println("El archivo ha sido encontrado en el servidor");
+		System.out.println("Elige la opción que desees:\n"
+				+ "1. Conectar al servidor\n"
+				+ "2. Buscar archivos\n"
+				+ "3. Listar ficheros y directorios\n"
+				+ "4. Buscar un fichero o directorio\n"
+				+ "5. Descargar un fichero\n"
+				+ "6. Subir un fichero\n"
+				+ "7. Desconectar");
+		int opcion = sc.nextInt();
+		switch (opcion) {
+		case 1:
+			// Llamamos al método conectar
+			conectar();
+			break;
+		case 2:
+
+			break;
+		case 3:
+			// Almacenamos los archivos procedentes del método en un
+			// Array de Strings denominado archivos
+			String[] archivos = listarArchivos();
+			// Mostramos los archivos que hay dentro del servidor
+			System.out.println("Archivos en el servidor: " + Arrays.toString(archivos));
+			break;
+		case 4:
+			// Almacenamos en un boolean si se ha encontrado el siguiente archivo o no
+			boolean encontrado = buscarArchivo("archivo.txt");
+			// Si se ha encontrado se realiza lo siguiente
+			if (encontrado) {
+				System.out.println("El archivo se ha encontrado correctamente en el FTP.");
+			} else {
+				// Si nada ha sido posible, se muestra mensaje de error.
+				System.out.println("El archivo no ha sido encontrado en el servidor");
+			}
+			break;
+		case 5:
 			// Almacenamos en un boolean si se ha descargado el siguiente archivo o no
 			boolean descargado = descargarArchivo("archivo.txt", "/home/usuario/");
 			// Si se ha descargado se realiza lo siguiente
@@ -48,9 +74,13 @@ public class ClienteFTP implements Runnable {
 				// Si no tambien se muestra otro de error.
 				System.out.println("No se ha podido descargar el archivo");
 			}
-		} else {
-			// Si nada ha sido posible, se muestra mensaje de error.
-			System.out.println("El archivo no ha sido encontrado en el servidor");
+			break;
+		case 7:
+			desconectar();
+			break;
+
+		default:
+			break;
 		}
 		/*
 		boolean subido = subirArchivo("/home/usuario/archivo.txt", "archivo.txt");
@@ -59,12 +89,11 @@ public class ClienteFTP implements Runnable {
 		} else {
 			System.out.println("No se ha podido subir el archivo");
 		}
-		*/
-		
-		// Finalmente desconectamos
-		desconectar();
+		 */
 	}
-	// Método conectar al un servidor
+	/**
+	 * Método conectar al un servidor
+	 */
 	public void conectar() {
 		// Objecto de la clase FTPClient, que es de Apache Commnons Net
 		ftp = new FTPClient();
@@ -78,14 +107,17 @@ public class ClienteFTP implements Runnable {
 			// Seleccionamos el tipo de archivo
 			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
 			// Enviamos un mensaje
-			System.out.println("Conexión establecida con " + servidor);
+			System.out.println("El usuario=" + usuario + " A CONECTADO correctamente con el servidor=" + servidor);
+			System.out.println(ftp.getReplyString());
 		} catch (IOException e) {
 			// En caso de error enviamos el siguiente mensaje
-			System.out.println("No se ha podido conectar con el servidor " + servidor);
+			System.out.println("El usuario=" + usuario + " NO puede conectar con el servidor=" + servidor);
 			e.printStackTrace(); // También el mensaje detallado
 		}
 	}
-	// Método desconectar del servidor
+	/**
+	 * Método desconectar del servidor
+	 */
 	public void desconectar() {
 		try {
 			// Cerramos la sesión
@@ -100,7 +132,10 @@ public class ClienteFTP implements Runnable {
 			e.printStackTrace(); // También un mensaje de error de tallado para más información
 		}
 	}
-	// Método para listar archivos mediante un array
+	/**
+	 * Método para listar archivos mediante un array
+	 * @return
+	 */
 	public String[] listarArchivos() {
 		try {
 			// Obtenemos la lista de nombres
@@ -113,7 +148,11 @@ public class ClienteFTP implements Runnable {
 		// Devolvemos un nulo
 		return null;
 	}
-	// Método booleano para buscar archivos
+	/**
+	 * Método booleano para buscar archivos
+	 * @param archivo
+	 * @return
+	 */
 	/*
 	 * Se elige booleano para obtener un SI o un NO y saber si una busqueda
 	 * se ha podido desarrollar correctamente y finalmente realizar las
@@ -137,7 +176,12 @@ public class ClienteFTP implements Runnable {
 		// Devolvemos una respuesta false
 		return false;
 	}
-	// Método boolean para descargar los archivos
+	/**
+	 * Método para descargar los archivos del ftp a nuestro ordenador
+	 * @param archivoRemoto
+	 * @param rutaLocal
+	 * @return
+	 */
 	/*
 	 * Necesitamos que sea booleano, para determinar si la acción ha
 	 * salido correcta o no, y también saber si hacer una acción u otra.
@@ -167,5 +211,5 @@ public class ClienteFTP implements Runnable {
         }
         return false;
     } 
-    */
+	 */
 }
