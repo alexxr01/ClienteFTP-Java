@@ -39,12 +39,12 @@ public class TestFTP {
 			// Mostramos el mensaje de menú.
 			System.out.println("Elige la opción que desees:\n"
 					+ "1. Conectar al servidor\n"
-					+ "2. Buscar archivos\n"
-					+ "3. Listar ficheros y directorios\n"
-					+ "4. Buscar un fichero o directorio\n"
-					+ "5. Descargar un fichero\n"
-					+ "6. Subir un fichero\n"
-					+ "7. Desconectar");
+					+ "2. Listar ficheros y directorios\n"
+					+ "3. Buscar un fichero o directorio\n"
+					+ "4. Descargar un fichero\n"
+					+ "5. Subir un fichero\n"
+					+ "6. Desconectar\n"
+					+ "7. Salir del cliente FTP");
 			// Excepciones
 		} catch (IOException e) {
 			// Mensaje
