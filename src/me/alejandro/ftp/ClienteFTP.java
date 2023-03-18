@@ -43,8 +43,14 @@ public class ClienteFTP implements Runnable {
 				// Almacenamos los archivos procedentes del método en un
 				// Array de Strings denominado archivos
 				String[] archivos = listarArchivos();
-				// Mostramos los archivos que hay dentro del servidor
-				System.out.println("Archivos en el servidor: " + Arrays.toString(archivos));
+				// Hacemos unas comprobaciones, para que quede perfecto.
+				if (archivos != null) {
+					// Mostramos los archivos que hay dentro del servidor
+					System.out.println("Archivos en el servidor: " + Arrays.toString(archivos));
+				} else {
+					// Mostramos un pequeño mensaje de error.
+					System.out.println("No hay archivos en el servidor.");
+				}
 				break;
 			case 3:
 				// Almacenamos en un boolean si se ha encontrado el siguiente archivo o no
