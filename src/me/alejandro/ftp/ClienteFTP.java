@@ -1,6 +1,7 @@
 package me.alejandro.ftp;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +34,7 @@ public class ClienteFTP implements Runnable {
 	// Creamos un hilo, ya que la actividad nos lo pide.
 	@Override
 	public void run() {
-		while (opcion != 8) {
+		while (opcion != 7) {
 			switch (opcion) {
 			case 1:
 				// Llamamos al método conectar
@@ -42,11 +43,19 @@ public class ClienteFTP implements Runnable {
 			case 2:
 				// Almacenamos los archivos procedentes del método en un
 				// Array de Strings denominado archivos
-				String[] archivos = listarArchivos();
+				FTPFile[] archivos = listarArchivos();
 				// Hacemos unas comprobaciones, para que quede perfecto.
 				if (archivos != null) {
 					// Mostramos los archivos que hay dentro del servidor
-					System.out.println("Archivos en el servidor: " + Arrays.toString(archivos));
+					System.out.println("\n");
+					for (FTPFile listaArchivos : archivos) {
+						String name = listaArchivos.getName();
+		                if (listaArchivos.isDirectory()) {
+		                    System.out.println("📂 " + listaArchivos);
+		                } else {
+		                    System.out.println("📄 " + listaArchivos);
+		                }
+		            }
 				} else {
 					// Mostramos un pequeño mensaje de error.
 					System.out.println("No hay archivos en el servidor.");
@@ -62,13 +71,13 @@ public class ClienteFTP implements Runnable {
 					System.out.println("El archivo se ha encontrado correctamente en el FTP.");
 				} else {
 					// Si nada ha sido posible, se muestra mensaje de error.
-					System.out.println("No se ha podido buscar el archivo en el servidor " + servidor);
+					System.out.println("No se ha podido buscar el archivo.");
 				}
 				break;
 			case 4:
 				System.out.println("Por favor, indica el archivo del ftp a descargar:");
 				String archivoDescargar = sc.next();
-				System.out.println("Introduce la ruta de descarga (de tu pc):");
+				System.out.println("Introduce la ruta de descarga (Por ejemplo /home/usuario/Descargas/):");
 				String rutaDescargar = sc.next();
 				// Almacenamos en un boolean si se ha descargado el siguiente archivo o no
 				boolean descargado = descargarArchivo(archivoDescargar, rutaDescargar);
@@ -95,14 +104,9 @@ public class ClienteFTP implements Runnable {
 				// Subir archivo
 				break;
 			case 6:
-				// Solo se desconecta del servidor
+				// Solo se desconecta del servidor, si además quieres salir del programa
+				// se deberá usar la opción numero 7.
 				desconectar();
-				break;
-
-			case 7:
-				// Salimos del bucle y mostramos mensaje
-				desconectar();
-				System.out.println("Has salido correctamente. También se ha hecho una desconexión del ftp.");
 				break;
 
 			default:
@@ -110,18 +114,8 @@ public class ClienteFTP implements Runnable {
 			}
 			opcion = sc.nextInt();
 		}
-		/*
-		boolean subido = subirArchivo("/home/usuario/archivo.txt", "archivo.txt");
-		if (subido) {
-			System.out.println("El archivo se ha subido correctamente");
-		} else {
-			System.out.println("No se ha podido subir el archivo");
-		}
-		 */
 	}
-	public void decirHola() {
-		System.out.println("Hola");
-	}
+	
 	/**
 	 * Método conectar al un servidor
 	 */
@@ -167,10 +161,10 @@ public class ClienteFTP implements Runnable {
 	 * Método para listar archivos mediante un array
 	 * @return
 	 */
-	public String[] listarArchivos() {
+	public FTPFile[] listarArchivos() {
 		try {
 			// Obtenemos la lista de nombres
-			return ftp.listNames();
+			return ftp.listFiles();
 		} catch (IOException e) {
 			// En caso de error mostramos un mensaje de error
 			System.out.println("No se ha podido obtener la lista de archivos del servidor " + servidor);
